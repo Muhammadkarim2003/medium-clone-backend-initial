@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
     class Meta:
         db_table = 'user'
         verbose_name = 'User'
-        verbose_name_plural = 'User'
+        verbose_name_plural = 'Users'
         ordering = ["-date_joined"]
 
     def __str__(self) -> str:
