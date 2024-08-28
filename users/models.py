@@ -6,7 +6,7 @@ class CustomUser(AbstractUser):
     middle_name = models.CharField(max_length=30, blank=True, null=True)
 
     class Meta:
-        db_table = 'users'
+        db_table = 'user'
         verbose_name = 'User'
         verbose_name_plural = 'User'
         ordering = ["-date_joined"]
