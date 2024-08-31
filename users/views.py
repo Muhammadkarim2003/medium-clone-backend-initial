@@ -16,6 +16,7 @@ class SignupView(APIView):
     serializer_class = UserSerializer
     permission_classes = (permissions.AllowAny,)
 
+
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -39,10 +40,9 @@ class LoginView(APIView):
 
         user = authenticate(
             request,
-            username = serializer.validated_data['username'],
-            password = serializer.validated_data['password']
+            username=serializer.validated_data['username'],
+            password=serializer.validated_data['password']
         )
-
 
         if user is not None:
             refresh = RefreshToken.for_user(user)
@@ -51,11 +51,11 @@ class LoginView(APIView):
                 'access': str(refresh.access_token),
             }, status=status.HTTP_200_OK)
         else:
-            return Response({'detail': 'Hisob malumotlari yaroqsiz'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'detail': 'Hisob maʼlumotlari yaroqsiz'}, status=status.HTTP_401_UNAUTHORIZED)
         
 
 class UsersMe(generics.RetrieveAPIView, generics.UpdateAPIView):
-    http_method_names = ['get']
+    http_method_names = ['get',]
     queryset = User.objects.filter(is_active=True)
     permission_classes = (IsAuthenticated,)
 
