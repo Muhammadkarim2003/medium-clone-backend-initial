@@ -42,16 +42,16 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-EXTIRNAL_APPS = [
-    'rest_framework',
-    'rest_framework_simplejwt',
+EXTERNAL_APPS = [
+    'rest_framework',            
+    'rest_framework_simplejwt',  
 ]
 
 LOCAL_APPS = [
     'users',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + EXTIRNAL_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

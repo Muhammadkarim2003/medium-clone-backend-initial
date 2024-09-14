@@ -6,16 +6,13 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
 from .serializers import UserSerializer, LoginSerializer, ValidationErrorSerializer, TokenResponseSerializer
 from django.contrib.auth import get_user_model
-from django.shortcuts import render
-
 
 User = get_user_model()
 
-
+# SignUp qilish uchun class
 class SignupView(APIView):
     serializer_class = UserSerializer
     permission_classes = (permissions.AllowAny,)
-
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -29,7 +26,10 @@ class SignupView(APIView):
                 'access': str(refresh.access_token),
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+
+
+# Login qilish uchun class
 class LoginView(APIView):
     serializer_class = LoginSerializer
     permission_classes = [permissions.AllowAny]
@@ -48,13 +48,14 @@ class LoginView(APIView):
             refresh = RefreshToken.for_user(user)
             return Response({
                 'refresh': str(refresh),
-
                 'access': str(refresh.access_token),
             }, status=status.HTTP_200_OK)
         else:
             return Response({'detail': 'Hisob maʼlumotlari yaroqsiz'}, status=status.HTTP_401_UNAUTHORIZED)
-        
 
+
+
+# User malumotlarni olish uchum class
 class UsersMe(generics.RetrieveAPIView, generics.UpdateAPIView):
     http_method_names = ['get',]
     queryset = User.objects.filter(is_active=True)
@@ -62,8 +63,6 @@ class UsersMe(generics.RetrieveAPIView, generics.UpdateAPIView):
 
     def get_object(self):
         return self.request.user
-    
+
     def get_serializer_class(self):
         return UserSerializer
-
-
