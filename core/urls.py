@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import user_passes_test
 
 def is_supperuser(user):
     # return user.is_superuser  faqat superuser
-    # return user.is_authenticated
-    return True  #istalgan user
+    return user.is_authenticated
+    # return True  #istalgan user
 
 urlpatterns = [
     path("admin/", admin.site.urls),
