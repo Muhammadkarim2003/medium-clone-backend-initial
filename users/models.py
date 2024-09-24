@@ -44,11 +44,11 @@ class CustomUser(AbstractUser):
         verbose_name_plural = 'Users'
         ordering = ["-date_joined"]
         constraints = [
-             models.CheckConstraint(
-                  check=models.Q(birth_year__gt=settings.BIRTH_YEAR_MIN) & models.Q(birth_year__lt=settings.BIRTH_YEAR_MAX),
-                       name='chack_birth_year_range'
-             )
-        ]
+        models.CheckConstraint(
+            check=models.Q(birth_year__gt=settings.BIRTH_YEAR_MIN) & models.Q(birth_year__lt=settings.BIRTH_YEAR_MAX),
+            name='check_birth_year_range'
+        )
+    ]
 
     def __str__(self) -> str:
         if self.full_name:
