@@ -117,7 +117,7 @@ class UsersMe(generics.RetrieveAPIView, generics.UpdateAPIView):
     
 
 @extend_schema_view(
-    post = extend_schema(
+    post=extend_schema(
         summary="Log out a user",
         request=None,
         responses={
@@ -128,9 +128,8 @@ class UsersMe(generics.RetrieveAPIView, generics.UpdateAPIView):
 )
 class LogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    
+
     @extend_schema(responses=None)
     def post(self, request, *args, **kwargs):
         UserService.create_tokens(request.user, access='fake_token', refresh='fake_token', is_force_add_to_redis=True)
         return Response({"detail": "Mufaqqiyatli chiqildi."})
-
