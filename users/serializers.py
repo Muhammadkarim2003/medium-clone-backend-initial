@@ -1,6 +1,10 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+
 from django.conf import settings
 from users.errors import BIRTH_YEAR_ERROR_MSG
 
@@ -84,6 +88,22 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             return data
 
 
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
 
+
+    def validate_password(self, value):
+        try:
+            validate_password(value)
+        except ValidationError as e:
+            raise serializers.ValidationError(e.message)
+        return value
+    
+    def validate(self, data):
+        if data['new_password'] == data['old_password']:
+            raise serializers.ValidationError("Yangi va eski parol bir xil bo'lmasligi kerak")
+        return data
+    
 
     
