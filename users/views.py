@@ -10,7 +10,10 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 from django.contrib.auth import get_user_model
 from django_redis import get_redis_connection
 from .enums import TokenType
-from .services import TokenService, UserService
+from .services import TokenService, UserService, SendEmailService
+
+import random
+
 
 User = get_user_model()
 
@@ -104,6 +107,11 @@ class UsersMe(generics.RetrieveAPIView, generics.UpdateAPIView):
         return self.request.user
 
     def get_serializer_class(self):
+
+        email = self.request.user.email
+        code = random.randint(10000, 99999)
+        SendEmailService.send_email(email, code)
+
         if self.request.method == "PATCH":
             return UserUpdateSerializer
         return UserSerializer
@@ -133,3 +141,5 @@ class LogoutView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         UserService.create_tokens(request.user, access='fake_token', refresh='fake_token', is_force_add_to_redis=True)
         return Response({"detail": "Mufaqqiyatli chiqildi."})
+    
+
