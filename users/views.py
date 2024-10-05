@@ -120,15 +120,16 @@ class UsersMe(generics.RetrieveAPIView, generics.UpdateAPIView):
         return self.request.user
 
     def get_serializer_class(self):
-        if self.request.method == "PATCH":
+        if self.request.method == 'PATCH':
             return UserUpdateSerializer
         return UserSerializer
-    
+
     def patch(self, request, *args, **kwargs):
         redis_conn = get_redis_connection('default')
         redis_conn.set('test_key', 'test_value', ex=3600)
         cached_value = redis_conn.get('test_key')
         print(cached_value)
+
         return super().partial_update(request, *args, **kwargs)
     
 
@@ -184,6 +185,7 @@ class ChangePasswordView(APIView):
         else:
             raise ValidationError("Eski parol xato")
         
+        
 @extend_schema_view(
     post=extend_schema(
         summary="Forgot Password",
@@ -219,7 +221,7 @@ class ForgotPasswordView(generics.CreateAPIView):
             redis_conn = OTPService.get_redis_conn()
             redis_conn.delete(f"{email}:otp")
             raise ValidationError("Emailga xabar yuborishda xatolik yuz berdi")
-        
+
 @extend_schema_view(
     post=extend_schema(
         summary="Forgot Password Verify",
@@ -250,7 +252,7 @@ class ForgotPasswordVerifyView(generics.CreateAPIView):
         token_hash = make_password(token_urlsafe())
         redis_conn.set(token_hash, email, ex=2 * 60 * 60)
         return Response({"token": token_hash})
-    
+
 @extend_schema_view(
     patch=extend_schema(
         summary="Reset Password",

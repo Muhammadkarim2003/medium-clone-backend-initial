@@ -111,24 +111,23 @@ class ForgotPasswordRequestSerializer(serializers.Serializer):
 
     def validate_email(self, value):
         if not User.objects.filter(email=value).exists():
-            raise ValidationError("Email topilmadi")
+            raise ValidationError("Email topilmadi.")
         return value
-    
+
 class ForgotPasswordResponseSerializer(serializers.Serializer):
     email = serializers.CharField(required=True)
     otp_secret = serializers.CharField(required=True)
 
-class ForgotPasswordVerifyResponseSerializer(serializers.Serializer):
-    token = serializers.CharField(required=True)
-
 class ForgotPasswordVerifyRequestSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
-    otp_code = serializers.CharField(required=True)
+    otp_code = serializers.CharField(required=True, max_length=6)
+
+class ForgotPasswordVerifyResponseSerializer(serializers.Serializer):
+    token = serializers.CharField(required=True)
 
 class ResetPasswordResponseSerializer(serializers.Serializer):
     token = serializers.CharField(required=True)
     password = serializers.CharField(required=True, min_length=8, write_only=True)
-
 
     def validate_password(self, value):
         try:
@@ -136,6 +135,5 @@ class ResetPasswordResponseSerializer(serializers.Serializer):
         except ValidationError as e:
             raise serializers.ValidationError(e.message)
         return value
-
 
     
