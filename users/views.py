@@ -206,7 +206,7 @@ class ForgotPasswordView(generics.CreateAPIView):
         users = User.objects.filter(email=email, is_active=True)
         if not users.exists():
             raise exceptions.NotFound(ACTIVE_USER_NOT_FOUND_ERROR_MSG)
-        
+
         otp_code, otp_secret = OTPService.generate_otp(email=email, expire_in=2 * 60)
 
         try:
@@ -222,7 +222,7 @@ class ForgotPasswordView(generics.CreateAPIView):
         
 @extend_schema_view(
     post=extend_schema(
-        summary="Forgot password Verify",
+        summary="Forgot Password Verify",
         request=ForgotPasswordVerifyRequestSerializer,
         responses={
             200: ForgotPasswordVerifyResponseSerializer,
@@ -272,16 +272,16 @@ class ResetPasswordView(generics.UpdateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        token_hash = serializer.validate_data = ['token']
+        token_hash = serializer.validated_data['token']
         email = redis_conn.get(token_hash)
 
         if not email:
             raise ValidationError("Token yaroqsiz")
-        
+
         users = User.objects.filter(email=email.decode(), is_active=True)
         if not users.exists():
             raise exceptions.NotFound(ACTIVE_USER_NOT_FOUND_ERROR_MSG)
-        
+
         password = serializer.validated_data['password']
         user = users.first()
         user.set_password(password)
@@ -291,5 +291,4 @@ class ResetPasswordView(generics.UpdateAPIView):
         tokens = UserService.create_tokens(user, is_force_add_to_redis=True)
         redis_conn.delete(token_hash)
         return Response(tokens)
-
 
