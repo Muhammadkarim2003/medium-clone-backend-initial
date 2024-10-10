@@ -24,7 +24,7 @@ from secrets import token_urlsafe
 from django_redis import get_redis_connection
 from .enums import TokenType
 from .services import TokenService, UserService, SendEmailService, OTPService
-
+from .errors import ACTIVE_USER_NOT_FOUND_ERROR_MSG
 import random
 
 
