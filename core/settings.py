@@ -3,6 +3,9 @@ from decouple import config
 from datetime import timedelta, datetime
 import os
 from django.utils.translation import gettext_lazy as _
+from loguru import logger
+import sys
+from .custom_logging import InterceptHandler
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,9 +48,9 @@ DJANGO_APPS = [
 ]
 
 EXTERNAL_APPS = [
-    'rest_framework',            
+    'rest_framework',
     'rest_framework_simplejwt',
-    'drf_spectacular', 
+    'drf_spectacular',
     'django_redis',
     'modeltranslation',
 ]
@@ -57,6 +60,31 @@ REDIS_PORT = config('REDIS_PORT', default='6379')
 REDIS_DB = config('REDIS_DB', default='1')
 
 REDIS_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}'
+
+logger.info(f"Using redis | URL: {REDIS_URL}")
+
+LOGGING = {
+    'version': 1,
+    'desable_existing_loggers': False,
+    'handlers': {
+            'intercept': {
+                '()': InterceptHandler,
+                'level':0,
+            },
+            'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'django.log'
+            },
+        },
+        'loggers': {
+        '': {
+        'handlers': ['intercept', 'file'],
+        'level': 'DEBUG',
+        'propagate': True,
+        },
+    }
+}
 
 CACHES = {
     'default': {
@@ -87,6 +115,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "core.middlewares.LogRequestMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
