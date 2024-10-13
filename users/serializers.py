@@ -8,6 +8,8 @@ from django.core.exceptions import ValidationError
 from django.conf import settings
 from users.errors import BIRTH_YEAR_ERROR_MSG
 
+from django.utils.translation import gettext_lazy as _
+
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):   
@@ -45,9 +47,9 @@ class LoginSerializer(serializers.Serializer):
         if username and password:
             user = authenticate(username=username, password=password)
             if user is None:
-                raise serializers.ValidationError('Kirish maʼlumotlari notoʻgʻri')
+                raise serializers.ValidationError(_('Kirish maʼlumotlari notoʻgʻri'))
         else:
-            raise serializers.ValidationError('Foydalanuvchi nomi va parol ham talab qilinadi')
+            raise serializers.ValidationError(_('Foydalanuvchi nomi va parol ham talab qilinadi'))
 
         data['user'] = user
         return data
@@ -84,7 +86,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             birth_year = data.get('birth_year')
             if birth_year is not None:
                 if not (settings.BIRTH_YEAR_MIN < birth_year < settings.BIRTH_YEAR_MAX):
-                    raise serializers.ValidationError({"birth_year": BIRTH_YEAR_ERROR_MSG})
+                    raise serializers.ValidationError(_({"birth_year": BIRTH_YEAR_ERROR_MSG}))
             return data
 
 
@@ -102,7 +104,7 @@ class ChangePasswordSerializer(serializers.Serializer):
     
     def validate(self, data):
         if data['new_password'] == data['old_password']:
-            raise serializers.ValidationError("Yangi va eski parol bir xil bo'lmasligi kerak")
+            raise serializers.ValidationError(_("Yangi va eski parol bir xil bo'lmasligi kerak"))
         return data
     
 
@@ -111,7 +113,7 @@ class ForgotPasswordRequestSerializer(serializers.Serializer):
 
     def validate_email(self, value):
         if not User.objects.filter(email=value).exists():
-            raise ValidationError("Email topilmadi.")
+            raise ValidationError(_("Email topilmadi."))
         return value
 
 class ForgotPasswordResponseSerializer(serializers.Serializer):

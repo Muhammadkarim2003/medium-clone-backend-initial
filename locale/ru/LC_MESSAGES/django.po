@@ -1,0 +1,100 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-12 09:51+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+#: .\core\settings.py:246
+msgid "English"
+msgstr ""
+
+#: .\core\settings.py:247
+msgid "Uzbek"
+msgstr "Узбекский"
+
+#: .\core\settings.py:248
+msgid "Russian"
+msgstr "Русский"
+
+#: .\users\authentications.py:28
+msgid "Access token yaroqsiz"
+msgstr "Токен доступа недействителен."
+
+#: .\users\authentications.py:39
+msgid "Kirish malumotlari yaroqsiz"
+msgstr "Неверная информация для входа"
+
+#: .\users\errors.py:5
+#, python-brace-format
+msgid ""
+"Tug'ilgan yili {min_year} dan katta va {max_year} dan kichik bo'lishi kerak."
+msgstr "Год рождения должен быть больше {min_year} и меньше {max_year}."
+
+#: .\users\errors.py:7
+msgid "Ushbu elektron pochta manzili bilan faol foydalanuvchi topilmadi"
+msgstr "Активного пользователя с этим адресом электронной почты не обнаружено."
+
+#: .\users\exceptions.py:8
+msgid "OTP verification failed."
+msgstr "Проверка OTP не удалась"
+
+#: .\users\serializers.py:50
+msgid "Kirish maʼlumotlari notoʻgʻri"
+msgstr "Неверная информация для входа"
+
+#: .\users\serializers.py:52
+msgid "Foydalanuvchi nomi va parol ham talab qilinadi"
+msgstr "Также требуются имя пользователя и пароль"
+
+#: .\users\serializers.py:89
+msgid "birth_year"
+msgstr "год рождения"
+
+#: .\users\serializers.py:107
+msgid "Yangi va eski parol bir xil bo'lmasligi kerak"
+msgstr "Новый и старый пароль не должны совпадать"
+
+#: .\users\serializers.py:116
+msgid "Email topilmadi."
+msgstr "Электронная почта не найдена."
+
+#: .\users\services.py:147
+#, python-brace-format
+msgid ""
+"Sizda yaroqli OTP kodingiz bor. {ttl} soniyadan keyin qayta urinib ko'ring."
+msgstr "У вас есть действительный OTP-код. Повторите попытку через {ttl} секунд."
+
+#: .\users\services.py:158
+msgid "Yaroqsiz OTP kodi"
+msgstr "Неверный OTP-код"
+
+#: .\users\views.py:93 .\users\views.py:152
+msgid "detail"
+msgstr "деталь"
+
+#: .\users\views.py:186
+msgid "Eski parol xato"
+msgstr "Старый пароль неправильный"
+
+#: .\users\views.py:223
+msgid "Emailga xabar yuborishda xatolik yuz berdi"
+msgstr "Электронная почтага хабар юборишда ксатолик юз берди"
+
+#: .\users\views.py:281
+msgid "Token yaroqsiz"
+msgstr "Токен недействителен"

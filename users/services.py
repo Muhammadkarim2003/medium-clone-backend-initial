@@ -6,6 +6,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from django.utils.translation import gettext_lazy as _
+
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
@@ -142,7 +144,7 @@ class OTPService:
         if check_if_exists and redis_conn.exists(key):
             ttl = redis_conn.ttl(key)
             raise OTPException(
-                ("Sizda yaroqli OTP kodingiz bor. {ttl} soniyadan keyin qayta urinib ko'ring.").format(ttl=ttl)
+                _("Sizda yaroqli OTP kodingiz bor. {ttl} soniyadan keyin qayta urinib ko'ring.").format(ttl), ttl
             )
         redis_conn.set(key, otp_hash, ex=expire_in)
         return otp_code, secret_token
@@ -153,7 +155,7 @@ class OTPService:
         stored_hash = redis_conn.get(f"{email}: otp")
 
         if not stored_hash or not check_password(f"{otp_secret}:{otp_code}", stored_hash.decode()):
-            raise OTPException("Yaroqsiz OTP kodi")
+            raise OTPException(_("Yaroqsiz OTP kodi"))
 
     @classmethod
     def generate_token(cls) -> str:
