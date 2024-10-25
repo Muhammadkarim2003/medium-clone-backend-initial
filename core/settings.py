@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 #     "django.contrib.staticfiles",
 #     'users',
 #     'rest_framework',
+    # 'articles',
 # ]
 
 
@@ -101,6 +102,7 @@ SESSION_CACHE_ALIAS = 'default'
 
 LOCAL_APPS = [
     'users',
+    'articles',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + LOCAL_APPS
