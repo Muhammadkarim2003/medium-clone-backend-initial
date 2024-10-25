@@ -14,6 +14,7 @@ class Topic(models.Model):
         db_table = "topic" 
         verbose_name = "Topic"
         verbose_name_plural = "Topics"
+        ordering = ["name"] 
 
 class Article(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
