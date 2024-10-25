@@ -35,3 +35,11 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Clap(models.Model):
+    article = models.ForeignKey(Article, related_name='claps', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} clapped for {self.article.title}"
