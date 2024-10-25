@@ -10,6 +10,11 @@ class Topic(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = "topic" 
+        verbose_name = "Topic"
+        verbose_name_plural = "Topics"
+
 class Article(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
