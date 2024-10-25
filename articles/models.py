@@ -21,5 +21,8 @@ class Article(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     topics = models.ManyToManyField(Topic)
 
+    class Meta:
+        db_table = "article"
+
     def __str__(self):
         return self.title
