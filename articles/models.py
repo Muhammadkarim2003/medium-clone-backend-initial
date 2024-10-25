@@ -16,13 +16,15 @@ class Article(models.Model):
     summary = models.TextField()
     content = models.TextField()
     thumbnail = models.ImageField(upload_to='articles/thumbnails/')
-    status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('publish', 'Publish')])
+    status = models.CharField(max_length=20, default='pending')
+    topics = models.ManyToManyField('Topic')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    topics = models.ManyToManyField(Topic)
 
     class Meta:
-        db_table = "article"
+        db_table = 'article'  
+        verbose_name = "Article" 
+        verbose_name_plural = "Articles"  
 
     def __str__(self):
         return self.title
