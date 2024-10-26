@@ -3,8 +3,8 @@ from rest_framework.routers import DefaultRouter
 from .views import ArticlesView
 
 router = DefaultRouter()
-router.register(r'articles', ArticlesView)
+router.register(r'', ArticlesView)  # Asosiy yo‘nalishda ro‘yxatga olish
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('articles/', include(router.urls)),  # /articles/ ga to‘g‘ri keladi
 ]
